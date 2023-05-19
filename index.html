@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Jokes</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .container {
+      max-width: 400px;
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container text-center">
+    <h1>Random Jokes</h1>
+    <div id="joke" class="my-4"></div>
+    <button id="getJoke" class="btn btn-primary">Get Joke</button>
+  </div>
+
+  <script>
+    function getJoke() {
+      fetch('https://official-joke-api.appspot.com/jokes/random')
+        .then(response => response.json())
+        .then(data => {
+          const jokeSetup = data.setup;
+          const jokePunchline = data.punchline;
+          const jokeElement = document.getElementById('joke');
+          jokeElement.innerHTML = `<p><strong>${jokeSetup}</strong></p><p>${jokePunchline}</p>`;
+        })
+        .catch(error => {
+          console.log('An error occurred:', error);
+        });
+    }
+
+    document.getElementById('getJoke').addEventListener('click', getJoke);
+  </script>
+</body>
+
+</html>
